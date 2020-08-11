@@ -1,8 +1,10 @@
 package kr.co.tjoeun.listview_20200810
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.listview_20200810.adapters.StudentAdapter
 import kr.co.tjoeun.listview_20200810.datas.Student
@@ -57,11 +59,23 @@ class MainActivity : AppCompatActivity() {
 
         studentListView.setOnItemLongClickListener { adapterView, view, position, l ->
 
-//            position 번째 학생을 목록에서 삭제.
-            mStudentList.removeAt(position)
+//            오래 눌리면 => 정말 삭제 할건지? 물어보고, 확인을 눌러야 정말 삭제.
+
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("학생 삭제 확인")
+            alert.setMessage("정말 이 학생을 삭제 하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+//                실제로 확인을 누르면 실행할 코드 => 삭제처리 AND 새로고침
+                //            position 번째 학생을 목록에서 삭제.
+                mStudentList.removeAt(position)
 
 //            어댑터에게 새로고침 실행시키자.
-            mStudentAdapter.notifyDataSetChanged()
+                mStudentAdapter.notifyDataSetChanged()
+            })
+
+            alert.setNegativeButton("취소", null)
+            alert.show()
+
 
 //            오래 눌린 이벤트는 return t/f 처리를 해줘야함.
 
