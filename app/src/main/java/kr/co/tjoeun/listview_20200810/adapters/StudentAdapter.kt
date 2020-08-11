@@ -42,14 +42,18 @@ class StudentAdapter(
 
 //        row가 뿌려지기 전에 => 데이터와 조합해서, 적당히 문구 등등을 수정하고 나서 뿌려주자.
 
+//        연습문제 : 거주지 정보를 => (서울시 은평구) 형태로 가공해서 출력.
+
 //        뿌려줄 row 안에 있는 텍스트뷰를 변수로 담자.
         val nameTxt = row.findViewById<TextView>(R.id.nameTxt)
+        val addressTxt = row.findViewById<TextView>(R.id.addressTxt)
 
 //        상황에 맞게 (position에 맞게) 뿌려줄 근거 데이터 변수 (mList에서) 가져오기.
         val data = mList[position]
 
 //        UI에 근거 데이터 반영하기
         nameTxt.text = data.name
+        addressTxt.text = "(${data.address})"
 
 //        최종 완성된 row를 뿌려달라고 리턴처리.
         return row
