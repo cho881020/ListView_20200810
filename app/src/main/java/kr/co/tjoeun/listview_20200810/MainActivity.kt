@@ -2,6 +2,7 @@ package kr.co.tjoeun.listview_20200810
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kr.co.tjoeun.listview_20200810.adapters.StudentAdapter
 import kr.co.tjoeun.listview_20200810.datas.Student
@@ -37,6 +38,36 @@ class MainActivity : AppCompatActivity() {
 
 //        xml에 있는 리스트뷰의 어댑터로 지정해주자.
         studentListView.adapter = mStudentAdapter
+
+//        각각의 학생을 누르면, 그 학생의 이름을 토스트로 띄우자.
+//        학생을 누른다 => 리스트뷰의 줄 (Item)을 누른다.
+
+        studentListView.setOnItemClickListener { adapterView, view, position, l ->
+//            i or position 변수 => 어느 줄이 눌렸는지 알려준다.
+
+//            position에 맞는 학생 데이터를 가져와서 => 토스트에 이름을 찍자.
+
+            val clickedStudent = mStudentList[position]
+
+            Toast.makeText(this, clickedStudent.name, Toast.LENGTH_SHORT).show()
+
+        }
+
+//        각 줄이 오래 눌렸을때의 별도 이벤트 처리.
+
+        studentListView.setOnItemLongClickListener { adapterView, view, position, l ->
+
+//            position 번째 학생을 목록에서 삭제.
+            mStudentList.removeAt(position)
+
+//            어댑터에게 새로고침 실행시키자.
+            mStudentAdapter.notifyDataSetChanged()
+
+//            오래 눌린 이벤트는 return t/f 처리를 해줘야함.
+
+            return@setOnItemLongClickListener true
+
+        }
 
     }
 }
