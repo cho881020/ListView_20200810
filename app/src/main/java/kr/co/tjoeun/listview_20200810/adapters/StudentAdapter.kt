@@ -47,6 +47,7 @@ class StudentAdapter(
 //        뿌려줄 row 안에 있는 텍스트뷰를 변수로 담자.
         val nameTxt = row.findViewById<TextView>(R.id.nameTxt)
         val addressTxt = row.findViewById<TextView>(R.id.addressTxt)
+        val ageAndGenderTxt = row.findViewById<TextView>(R.id.ageAndGenderTxt)
 
 //        상황에 맞게 (position에 맞게) 뿌려줄 근거 데이터 변수 (mList에서) 가져오기.
         val data = mList[position]
@@ -54,6 +55,19 @@ class StudentAdapter(
 //        UI에 근거 데이터 반영하기
         nameTxt.text = data.name
         addressTxt.text = "(${data.address})"
+
+//        data내부의 isMale, birthYear를 가지고 => 33세, 남성 과 같은 방식으로 가공하자.
+
+//        성별이 어떻게 되는지?
+        var genderStr = "여성"
+        if (data.isMale) {
+            genderStr = "남성"
+        }
+
+//        올해 나이가 어떻게 되는지? 2020 - 본인생년 + 1 = 한국 나이
+        val age = 2020 - data.birthYear + 1
+
+        ageAndGenderTxt.text = "${age}세, ${genderStr}"
 
 //        최종 완성된 row를 뿌려달라고 리턴처리.
         return row
